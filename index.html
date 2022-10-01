@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="style.css" type="text/css" />
+      <link rel="icon" href="./BuggedIcon.png" type="image/x-icon" />
+      <title>Corridor writeup from THM</title>
+   </head>
+
+   <body>
+      <div id="dance_txt">
+         <a target="_blank" href="https://blind2k.github.io/roboDance1.0/">Dance!!!</a>
+      </div>
+      
+      <!-- TITLE -->
+      <h1>Welcome to the write up of room Corridor</h1>
+
+      <!-- ROOM INFO  -->
+      <div id="room_info">
+         <p>
+            Name: Corridor<br />
+            Level: Easy<br />
+            Link: <a target="_blank" href="https://tryhackme.com/room/corridor" >tryhackme.com/room/corridor</a>
+         </p>
+      </div>
+
+      <!-- CONTENT -->
+      # - Check for ports<br />
+      <code>nmap -p- -sC -sV --min-rate=9326 -vv -T4 -oA nmap_nor $IP</code><br />
+      # ! Open port in port 80, http. Two filtered, 30597 and 55238.<br />
+      # - Enumorate website on port 80.<br />
+      <code>gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -o dirb_m2 -u http://$IP</code><br />
+      # X Nothing cameup<br />
+      # ! Viewing the source code: all the strings in the link tags' source are not clear text.<br />
+      # ? Maybe the names are encrypted or hashed<br />
+      # X <a href="https://dencode.com/en/" target="_blank">decode.com/en/</a> = Not encryption.<br />
+      # V <a href="https://md5.gromweb.com/" target="_blank">md5.gromweb.com/</a> = success. It is a hash.<br />
+      # ! 1st string is "1".<br />
+      # ! The last string is 13.<br />
+      # x Trying to pass the numbers in 14,15,16 in their hash form did not lead anywhere (404).<br />
+      # v Especially With computers, counting is not started with 1.<br />
+   </body>
+</html>
